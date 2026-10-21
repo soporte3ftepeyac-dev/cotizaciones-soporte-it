@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Cotizaciones Soporte IT</title>
 
 <style>
@@ -52,26 +53,13 @@ th,td{
     text-align:left;
 }
 
-.status{
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
-    color:white;
-}
-
-.pendiente{
-    background:#f59e0b;
-}
-
-.cotizada{
-    background:#3b82f6;
-}
-
-.aprobada{
-    background:#10b981;
+.estado{
+    font-weight:bold;
 }
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body>
@@ -86,78 +74,70 @@ th,td{
 
 <div class="container">
 
-<div class="card">
+    <div class="card">
 
-<table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Asunto</th>
+                    <th>Proveedor</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
 
-<thead>
-<tr>
-<th>Ticket</th>
-<th>Asunto</th>
-<th>Proveedor</th>
-<th>Estado</th>
-</tr>
-</thead>
+            <tbody id="tablaSolicitudes">
+            </tbody>
 
-<tbody id="tablaSolicitudes">
-</tbody>
+        </table>
 
-</table>
+    </div>
 
 </div>
 
-</div>
 <script>
-const supabaseUrl = 'https://vkilesppmsjaluuqqakb.supabase.co';
-const supabaseKey = 'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
 
-const supabaseClient = supabase.createClient(
-  supabaseUrl,
-  supabaseKey
-);
-
-console.log('Supabase conectado');
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
 const supabaseUrl = 'https://vkilesppmsjaluuqqakb.supabase.co';
 const supabaseKey = 'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
 
 const client = supabase.createClient(
-  supabaseUrl,
-  supabaseKey
+    supabaseUrl,
+    supabaseKey
 );
 
 async function cargarSolicitudes() {
 
-  const { data, error } = await client
-    .from('Solicitudes')
-    .select('*');
+    const { data, error } = await client
+        .from('Solicitudes')
+        .select('*');
 
-  if (error) {
-    console.error(error);
-    return;
-  }
+    if (error) {
+        console.error('ERROR:', error);
+        return;
+    }
 
-  const tabla = document.getElementById('tablaSolicitudes');
-  tabla.innerHTML = '';
+    const tabla = document.getElementById('tablaSolicitudes');
 
-  data.forEach(item => {
+    tabla.innerHTML = '';
 
-    tabla.innerHTML += `
-      <tr>
-        <td>${item.ticket_interno || ''}</td>
-        <td>${item.asunto || ''}</td>
-        <td>${item.proveedor || ''}</td>
-        <td>${item.estado || ''}</td>
-      </tr>
-    `;
+    data.forEach(item => {
 
-  });
+        tabla.innerHTML += `
+            <tr>
+                <td>${item["Ticket Interno"] || ''}</td>
+                <td>${item.asunto || ''}</td>
+                <td>${item.proveedor || ''}</td>
+                <td>${item.estado || ''}</td>
+            </tr>
+        `;
+
+    });
 
 }
 
 cargarSolicitudes();
+
 </script>
+
 </body>
 </html>
