@@ -71,6 +71,7 @@ th,td{
     background:#10b981;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -140,6 +141,16 @@ Aprobada
 </div>
 
 </div>
+<script>
+const supabaseUrl = 'https://vkilesppmsjaluuqqakb.supabase.co';
+const supabaseKey = 'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
 
+const supabaseClient = supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+console.log('Supabase conectado');
+</script>
 </body>
 </html>
