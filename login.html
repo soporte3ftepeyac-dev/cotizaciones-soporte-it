@@ -149,11 +149,11 @@ async function login(){
     }
 
     const proveedores =
-        await client
-        .from('proveedores')
-        .select('*')
-        .eq('correo', correo);
+    await client
+    .from('proveedores')
+    .select('*');
 
+console.log('PROVEEDORES:', proveedores);
     if(
         proveedores.data &&
         proveedores.data.length > 0
