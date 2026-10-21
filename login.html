@@ -153,7 +153,8 @@ async function login(){
     .from('proveedores')
     .select('*');
 
-console.log('PROVEEDORES:', proveedores);
+console.log(proveedores.data);
+    alert(JSON.stringify(proveedores.data));
     if(
         proveedores.data &&
         proveedores.data.length > 0
