@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotizaciones Soporte IT</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f7fb;
+    margin:0;
+}
+
+.header{
+    background:#1e293b;
+    color:white;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.container{
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 5px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+}
+
+.status{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    color:white;
+}
+
+.pendiente{
+    background:#f59e0b;
+}
+
+.cotizada{
+    background:#3b82f6;
+}
+
+.aprobada{
+    background:#10b981;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>Cotizaciones Soporte IT</h2>
+
+    <button class="btn">
+        + Nueva Solicitud
+    </button>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<table>
+
+<thead>
+<tr>
+<th>Ticket</th>
+<th>Asunto</th>
+<th>Proveedor</th>
+<th>Estado</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>OST-15487</td>
+<td>Laptop Dell Latitude</td>
+<td>José Ojeda</td>
+<td>
+<span class="status pendiente">
+Pendiente
+</span>
+</td>
+</tr>
+
+<tr>
+<td>OST-15488</td>
+<td>Licencias Office 365</td>
+<td>José Ojeda</td>
+<td>
+<span class="status cotizada">
+Cotizada
+</span>
+</td>
+</tr>
+
+<tr>
+<td>OST-15489</td>
+<td>Switch Cisco</td>
+<td>José Ojeda</td>
+<td>
+<span class="status aprobada">
+Aprobada
+</span>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>
