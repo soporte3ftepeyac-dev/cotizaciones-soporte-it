@@ -112,8 +112,9 @@ async function login(){
         .from('soporte')
         .select('*')
         .eq('correo', correo);
-    console.log('Correo login:', correo);
-    console.log('Proveedor:', proveedor.data);
+    async function login() {
+   ...
+}
 
     if(
        soporte.data &&
