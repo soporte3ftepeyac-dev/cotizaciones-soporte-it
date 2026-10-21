@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Login - Cotizaciones Soporte IT</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f7f2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    width:350px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+h2{
+    color:#4BA33F;
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#4BA33F;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+#mensaje{
+    margin-top:15px;
+    color:red;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Cotizaciones Soporte IT</h2>
+
+    <input type="email" id="correo" placeholder="Correo">
+    <input type="password" id="password" placeholder="Contraseña">
+
+    <button onclick="login()">Iniciar Sesión</button>
+
+    <div id="mensaje"></div>
+</div>
+
+<script>
+
+const supabaseUrl =
+'https://vkilesppmsjaluuqqakb.supabase.co';
+
+const supabaseKey =
+'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
+
+const client = supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+
+async function login(){
+
+    const correo =
+        document.getElementById('correo').value;
+
+    const password =
+        document.getElementById('password').value;
+
+    const { error } =
+        await client.auth.signInWithPassword({
+
+            email: correo,
+            password: password
+
+        });
+
+    if(error){
+
+        document.getElementById('mensaje').innerText =
+            error.message;
+
+        return;
+    }
+
+    const soporte =
+        await client
+        .from('soporte')
+        .select('*')
+        .eq('correo', correo);
+
+    if(
+       soporte.data &&
+       soporte.data.length > 0
+    ){
+        window.location.href='index.html';
+        return;
+    }
+
+    const proveedor =
+        await client
+        .from('proveedores')
+        .select('*')
+        .eq('correo', correo);
+
+    if(
+       proveedor.data &&
+       proveedor.data.length > 0
+    ){
+        alert('Dashboard proveedor (siguiente paso)');
+        return;
+    }
+
+    alert('Usuario sin permisos');
+
+}
+</script>
+
+</body>
+</html>
