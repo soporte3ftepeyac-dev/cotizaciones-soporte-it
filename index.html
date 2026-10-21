@@ -99,41 +99,7 @@ th,td{
 </tr>
 </thead>
 
-<tbody>
-
-<tr>
-<td>OST-15487</td>
-<td>Laptop Dell Latitude</td>
-<td>José Ojeda</td>
-<td>
-<span class="status pendiente">
-Pendiente
-</span>
-</td>
-</tr>
-
-<tr>
-<td>OST-15488</td>
-<td>Licencias Office 365</td>
-<td>José Ojeda</td>
-<td>
-<span class="status cotizada">
-Cotizada
-</span>
-</td>
-</tr>
-
-<tr>
-<td>OST-15489</td>
-<td>Switch Cisco</td>
-<td>José Ojeda</td>
-<td>
-<span class="status aprobada">
-Aprobada
-</span>
-</td>
-</tr>
-
+<tbody id="tablaSolicitudes">
 </tbody>
 
 </table>
@@ -151,6 +117,47 @@ const supabaseClient = supabase.createClient(
 );
 
 console.log('Supabase conectado');
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = 'https://vkilesppmsjaluuqqakb.supabase.co';
+const supabaseKey = 'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
+
+const client = supabase.createClient(
+  supabaseUrl,
+  supabaseKey
+);
+
+async function cargarSolicitudes() {
+
+  const { data, error } = await client
+    .from('Solicitudes')
+    .select('*');
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const tabla = document.getElementById('tablaSolicitudes');
+  tabla.innerHTML = '';
+
+  data.forEach(item => {
+
+    tabla.innerHTML += `
+      <tr>
+        <td>${item.ticket_interno || ''}</td>
+        <td>${item.asunto || ''}</td>
+        <td>${item.proveedor || ''}</td>
+        <td>${item.estado || ''}</td>
+      </tr>
+    `;
+
+  });
+
+}
+
+cargarSolicitudes();
 </script>
 </body>
 </html>
