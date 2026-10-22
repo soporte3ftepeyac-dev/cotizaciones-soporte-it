@@ -6,6 +6,8 @@
 
 <title>Cotizaciones Soporte IT</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 body{
     font-family: Arial, sans-serif;
@@ -53,91 +55,21 @@ th,td{
     text-align:left;
 }
 
-.estado{
-    font-weight:bold;
-}
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-</head>
-
-<body>
-
-<div class="header">
-    <h2>Cotizaciones Soporte IT</h2>
-
-    <button class="btn">
-        + Nueva Solicitud
-    </button>
-</div>
-
-<div class="container">
-
-    <div class="card">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Ticket</th>
-                    <th>Asunto</th>
-                    <th>Proveedor</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-
-            <tbody id="tablaSolicitudes">
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
-
-<script>
-
-const supabaseUrl = 'https://vkilesppmsjaluuqqakb.supabase.co';
-const supabaseKey = 'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
-
-const client = supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-);
-
-async function cargarSolicitudes() {
-
-    const { data, error } = await client
-        .from('Solicitudes')
-        .select('*');
-
-    if (error) {
-        console.error('ERROR:', error);
-        return;
-    }
-
-    const tabla = document.getElementById('tablaSolicitudes');
-
-    tabla.innerHTML = '';
-
-    data.forEach(item => {
-
-        tabla.innerHTML += `
-            <tr>
-                <td>${item["ticket_interno"] || ''}</td>
-                <td>${item.asunto || ''}</td>
-                <td>${item.proveedor || ''}</td>
-                <td>${item.estado || ''}</td>
-            </tr>
-        `;
-
-    });
-
+#modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.5);
 }
 
-cargarSolicitudes();
-
-</script>
-
-</body>
-</html>
+.modal-content{
+    background:white;
+    width:700px;
+    max-width:95%;
+    margin:40px auto;
+    padding:20px;
+    border-radius:12px;
+}
