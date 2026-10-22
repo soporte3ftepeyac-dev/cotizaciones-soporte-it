@@ -156,12 +156,12 @@ async function login(){
 console.log(proveedores.data);
     alert(JSON.stringify(proveedores.data));
     if(
-        proveedores.data &&
-        proveedores.data.length > 0
-    ){
-        alert('Login proveedor correcto');
-        return;
-    }
+    proveedores.data &&
+    proveedores.data.length > 0
+){
+    window.location.href = 'proveedor.html';
+    return;
+}
 
     document.getElementById('mensaje').innerText =
         'Usuario sin permisos';
