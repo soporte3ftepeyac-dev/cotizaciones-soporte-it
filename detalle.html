@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Detalle de Solicitud</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    margin:0;
+}
+
+.header{
+    background:#4BA33F;
+    color:white;
+    padding:20px;
+}
+
+.container{
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.info{
+    background:#eef7ec;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:10px;
+    box-sizing:border-box;
+}
+
+textarea{
+    height:120px;
+}
+
+.btn{
+    margin-top:20px;
+    background:#4BA33F;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+    <h2>Detalle de Solicitud</h2>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="info">
+            <strong>Ticket:</strong>
+            <span id="ticket"></span>
+
+            <br><br>
+
+            <strong>Asunto:</strong>
+            <span id="asunto"></span>
+
+            <br><br>
+
+            <strong>Descripción:</strong>
+            <span id="descripcion"></span>
+        </div>
+
+        <label>Precio Cotización</label>
+        <input type="number" id="precioCotizacion">
+
+        <label>Precio Online</label>
+        <input type="number" id="precioOnline">
+
+        <label>Observaciones</label>
+        <textarea id="observaciones"></textarea>
+
+        <button
+            class="btn"
+            onclick="guardarCotizacion()">
+            Guardar Cotización
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const supabaseUrl =
+'https://vkilesppmsjaluuqqakb.supabase.co';
+
+const supabaseKey =
+'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
+
+const client =
+supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+
+const parametros =
+new URLSearchParams(
+    window.location.search
+);
+
+const ticket =
+parametros.get('ticket');
+
+async function cargarDetalle(){
+
+    const { data, error } =
+    await client
+        .from('Solicitudes')
+        .select('*')
+        .eq(
+            'ticket_interno',
+            ticket
+        )
+        .single();
+
+    if(error){
+        alert(error.message);
+        console.error(error);
+        return;
+    }
+
+    document.getElementById('ticket').innerText =
+        data.ticket_interno || '';
+
+    document.getElementById('asunto').innerText =
+        data.asunto || '';
+
+    document.getElementById('descripcion').innerText =
+        data.descripcion || '';
+
+    document.getElementById('precioCotizacion').value =
+        data.precio_cotizacion || '';
+
+    document.getElementById('precioOnline').value =
+        data.precio_online || '';
+
+    document.getElementById('observaciones').value =
+        data.observaciones || '';
+}
+
+async function guardarCotizacion(){
+
+    const { error } =
+    await client
+        .from('Solicitudes')
+        .update({
+
+            precio_cotizacion:
+                document.getElementById(
+                    'precioCotizacion'
+                ).value,
+
+            precio_online:
+                document.getElementById(
+                    'precioOnline'
+                ).value,
+
+            observaciones:
+                document.getElementById(
+                    'observaciones'
+                ).value,
+
+            estado:'Cotizada'
+
+        })
+        .eq(
+            'ticket_interno',
+            ticket
+        );
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    alert(
+        'Cotización guardada correctamente'
+    );
+}
+
+cargarDetalle();
+
+</script>
+
+</body>
+</html>
