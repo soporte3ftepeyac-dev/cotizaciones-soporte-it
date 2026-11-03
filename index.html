@@ -121,6 +121,7 @@ textarea{
                     <th>Estado</th>
                     <th>Precio de Cotización</th>
                     <th>Marca y modelo</th>
+                    <th>Validación</th>
                 </tr>
             </thead>
 
@@ -293,20 +294,56 @@ async function cargarSolicitudes(){
         <td>${item.estado || ''}</td>
         <td>${item.precio_cotizacion || ''}</td>
         <td>${item.observaciones || ''}</td>
+        <td>
+    <button onclick="aprobarSolicitud('${item.ticket_interno}')">
+        Aprobar
+    </button>
+
+    <button onclick="rechazarSolicitud('${item.ticket_interno}')">
+        Rechazar
+    </button>
+</td>
     </tr>
 `;
         });
+async function aprobarSolicitud(ticket){
 
+    const { error } =
+    await client
+        .from('Solicitudes')
+        .update({
+            estado:'Aprobada'
+        })
+        .eq(
+            'ticket_interno',
+            ticket
+        );
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    cargarSolicitudes();
 }
 
-function cerrarSesion(){
+async function rechazarSolicitud(ticket){
 
-    client.auth.signOut();
+    const { error } =
+    await client
+        .from('Solicitudes')
+        .update({
+            estado:'Rechazada'
+        })
+        .eq(
+            'ticket_interno',
+            ticket
+        );
 
-    window.location.href =
-        'login.html';
-
-}
+    if(error){
+        alert(error.message);
+        return;
+    }
 
 cargarSolicitudes();
 
