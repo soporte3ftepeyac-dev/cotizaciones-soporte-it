@@ -279,12 +279,13 @@ async function cargarSolicitudes(){
     </tr>
 `;
     });
-    async function cerrarSesion(){
+    function cerrarSesion(){
+    alert('Hola');
+}
 
     await client.auth.signOut();
 
-    window.location.href =
-        'login.html';
+    window.location.href = 'login.html';
 
 }
 
