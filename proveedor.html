@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Portal de Proveedores</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 body{
@@ -34,7 +37,7 @@ table{
     border-collapse:collapse;
 }
 
-th, td{
+th,td{
     padding:12px;
     border-bottom:1px solid #ddd;
     text-align:left;
@@ -42,6 +45,7 @@ th, td{
 </style>
 
 </head>
+
 <body>
 
 <div class="header">
@@ -49,27 +53,82 @@ th, td{
 </div>
 
 <div class="container">
+
     <div class="card">
 
         <h3>Mis Solicitudes</h3>
 
         <table>
-            <tr>
-                <th>Ticket</th>
-                <th>Asunto</th>
-                <th>Estado</th>
-            </tr>
 
-            <tr>
-                <td>OST-15487</td>
-                <td>Laptop Dell</td>
-                <td>Pendiente</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Asunto</th>
+                    <th>Proveedor</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaSolicitudes">
+            </tbody>
 
         </table>
 
     </div>
+
 </div>
+
+<script>
+
+const supabaseUrl =
+'https://vkilesppmsjaluuqqakb.supabase.co';
+
+const supabaseKey =
+'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
+
+const client =
+    supabase.createClient(
+        supabaseUrl,
+        supabaseKey
+    );
+
+async function cargarSolicitudes(){
+
+    const { data, error } =
+        await client
+        .from('Solicitudes')
+        .select('*');
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    const tabla =
+        document.getElementById(
+            'tablaSolicitudes'
+        );
+
+    tabla.innerHTML = '';
+
+    data.forEach(item => {
+
+        tabla.innerHTML += `
+            <tr>
+                <td>${item.ticket_interno || ''}</td>
+                <td>${item.asunto || ''}</td>
+                <td>${item.proveedor || ''}</td>
+                <td>${item.estado || ''}</td>
+            </tr>
+        `;
+
+    });
+
+}
+
+cargarSolicitudes();
+
+</script>
 
 </body>
 </html>
