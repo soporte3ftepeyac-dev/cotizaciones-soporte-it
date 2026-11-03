@@ -287,23 +287,23 @@ async function cargarSolicitudes(){
     data.forEach(item => {
 
         tabla.innerHTML += `
-    <tr>
-        <td>${item.ticket_interno || ''}</td>
-        <td>${item.asunto || ''}</td>
-        <td>${item.proveedor || ''}</td>
-        <td>${item.estado || ''}</td>
-        <td>${item.precio_cotizacion || ''}</td>
-        <td>${item.observaciones || ''}</td>
-        <td>
-    <button onclick="aprobarSolicitud('${item.ticket_interno}')">
-        Aprobar
-    </button>
+<tr>
+    <td>${item.ticket_interno || ''}</td>
+    <td>${item.asunto || ''}</td>
+    <td>${item.proveedor || ''}</td>
+    <td>${item.estado || ''}</td>
+    <td>${item.precio_cotizacion || ''}</td>
+    <td>${item.observaciones || ''}</td>
+    <td>
+        <button onclick="aprobarSolicitud('${item.ticket_interno}')">
+            Aprobar
+        </button>
 
-    <button onclick="rechazarSolicitud('${item.ticket_interno}')">
-        Rechazar
-    </button>
-</td>
-    </tr>
+        <button onclick="rechazarSolicitud('${item.ticket_interno}')">
+            Rechazar
+        </button>
+    </td>
+</tr>
 `;
         });
 async function aprobarSolicitud(ticket){
