@@ -171,7 +171,22 @@ textarea{
 </div>
 
 <script>
+verificarSesion();
 
+async function verificarSesion(){
+
+    const {
+        data: { session }
+    } = await client.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            'login.html';
+
+    }
+
+}
 const supabaseUrl =
 'https://vkilesppmsjaluuqqakb.supabase.co';
 
