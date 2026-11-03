@@ -66,6 +66,7 @@ th,td{
                     <th>Asunto</th>
                     <th>Proveedor</th>
                     <th>Estado</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
 
@@ -114,21 +115,34 @@ async function cargarSolicitudes(){
     data.forEach(item => {
 
         tabla.innerHTML += `
-            <tr>
-                <td>${item.ticket_interno || ''}</td>
-                <td>${item.asunto || ''}</td>
-                <td>${item.proveedor || ''}</td>
-                <td>${item.estado || ''}</td>
-            </tr>
+           <td>${item.ticket_interno || ''}</td>
+<td>${item.asunto || ''}</td>
+<td>${item.proveedor || ''}</td>
+<td>${item.estado || ''}</td>
+
+<td>
+    <button onclick="verCotizar('${item.ticket_interno}')">
+        Ver / Cotizar
+    </button>
+</td>
         `;
 
     });
 
 }
 
+function verCotizar(ticket){
+
+    alert(
+        'Ticket seleccionado: ' +
+        ticket
+    );
+
+}
 cargarSolicitudes();
 
 </script>
 
 </body>
 </html>
+
