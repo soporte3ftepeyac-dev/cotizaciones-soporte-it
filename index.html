@@ -171,6 +171,19 @@ textarea{
 </div>
 
 <script>
+
+const supabaseUrl =
+'https://vkilesppmsjaluuqqakb.supabase.co';
+
+const supabaseKey =
+'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
+
+const client =
+supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+
 verificarSesion();
 
 async function verificarSesion(){
@@ -187,18 +200,7 @@ async function verificarSesion(){
     }
 
 }
-const supabaseUrl =
-'https://vkilesppmsjaluuqqakb.supabase.co';
-
-const supabaseKey =
-'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
-
-const client =
-supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-);
-
+    
 function abrirModal(){
     document.getElementById('modal').style.display = 'block';
 }
