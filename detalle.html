@@ -147,31 +147,24 @@ document.getElementById(
 
 async function cargarDetalle(){
 
+    console.log('Ticket URL:', ticket);
+
     const { data, error } =
     await client
         .from('Solicitudes')
         .select('*')
-        .eq(
-            'ticket_interno',
-            ticket
-        )
+        .eq('ticket_interno', ticket)
         .single();
+
+    console.log('DATA:', data);
+    console.log('ERROR:', error);
 
     if(error){
         console.error(error);
         return;
     }
 
-    document.getElementById(
-        'asunto'
-    ).innerText =
-    data.asunto || '';
-
-    document.getElementById(
-        'descripcion'
-    ).innerText =
-    data.descripcion || '';
-
+    ...
 }
 
 async function guardarCotizacion(){
