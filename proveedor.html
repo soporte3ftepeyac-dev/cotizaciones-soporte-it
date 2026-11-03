@@ -133,10 +133,9 @@ async function cargarSolicitudes(){
 
 function verCotizar(ticket){
 
-    alert(
-        'Ticket seleccionado: ' +
-        ticket
-    );
+    window.location.href =
+        'detalle.html?ticket=' +
+        ticket;
 
 }
 cargarSolicitudes();
@@ -145,4 +144,5 @@ cargarSolicitudes();
 
 </body>
 </html>
+
 
