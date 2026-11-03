@@ -152,18 +152,11 @@ async function cargarDetalle(){
     const { data, error } =
     await client
         .from('Solicitudes')
-        .select('*')
-        .eq(
-            'ticket_interno',
-            ticket
-        )
-        .single();
+        .select('*');
 
-    if(error){
-        console.error(error);
-        alert(error.message);
-        return;
-    }
+    alert(JSON.stringify(data));
+
+}
 
     document.getElementById(
         'ticket'
