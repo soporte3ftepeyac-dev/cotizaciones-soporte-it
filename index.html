@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 body{
     font-family: Arial, sans-serif;
     background:#f5f7fb;
@@ -73,3 +74,202 @@ th,td{
     padding:20px;
     border-radius:12px;
 }
+
+input,
+textarea{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    box-sizing:border-box;
+}
+
+textarea{
+    height:120px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h2>Cotizaciones Soporte IT</h2>
+
+    <button class="btn" onclick="abrirModal()">
+        + Nueva Solicitud
+    </button>
+
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Asunto</th>
+                    <th>Proveedor</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaSolicitudes">
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div id="modal">
+
+    <div class="modal-content">
+
+        <h2>Nueva Solicitud</h2>
+
+        <input id="ticket" placeholder="Ticket Interno">
+
+        <input id="solicitante" placeholder="Nombre Solicitante">
+
+        <input id="empresa" placeholder="Empresa">
+
+        <input id="correo" placeholder="Correo">
+
+        <input id="telefono" placeholder="Teléfono">
+
+        <input id="asunto" placeholder="Asunto">
+
+        <textarea
+            id="descripcion"
+            placeholder="Descripción"
+        ></textarea>
+
+        <input id="proveedor" placeholder="Proveedor">
+
+        <button class="btn" onclick="guardarSolicitud()">
+            Guardar
+        </button>
+
+        <button onclick="cerrarModal()">
+            Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const supabaseUrl =
+'https://vkilesppmsjaluuqqakb.supabase.co';
+
+const supabaseKey =
+'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
+
+const client =
+supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+
+function abrirModal(){
+    document.getElementById('modal').style.display = 'block';
+}
+
+function cerrarModal(){
+    document.getElementById('modal').style.display = 'none';
+}
+
+async function guardarSolicitud(){
+
+    const { error } =
+    await client
+        .from('Solicitudes')
+        .insert([{
+
+            ticket_interno:
+                document.getElementById('ticket').value,
+
+            nombre_solicitante:
+                document.getElementById('solicitante').value,
+
+            empresa:
+                document.getElementById('empresa').value,
+
+            correo:
+                document.getElementById('correo').value,
+
+            telefono:
+                document.getElementById('telefono').value,
+
+            asunto:
+                document.getElementById('asunto').value,
+
+            descripcion:
+                document.getElementById('descripcion').value,
+
+            proveedor:
+                document.getElementById('proveedor').value,
+
+            estado:'Pendiente'
+
+        }]);
+
+    if(error){
+        alert(error.message);
+        console.error(error);
+        return;
+    }
+
+    cerrarModal();
+    cargarSolicitudes();
+
+    alert('Solicitud guardada');
+}
+
+async function cargarSolicitudes(){
+
+    const { data, error } =
+    await client
+        .from('Solicitudes')
+        .select('*');
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    const tabla =
+    document.getElementById(
+        'tablaSolicitudes'
+    );
+
+    tabla.innerHTML = '';
+
+    data.forEach(item => {
+
+        tabla.innerHTML += `
+            <tr>
+                <td>${item.ticket_interno || ''}</td>
+                <td>${item.asunto || ''}</td>
+                <td>${item.proveedor || ''}</td>
+                <td>${item.estado || ''}</td>
+            </tr>
+        `;
+
+    });
+
+}
+
+cargarSolicitudes();
+
+</script>
+
+</body>
+</html>
