@@ -100,7 +100,11 @@ textarea{
     <button class="btn" onclick="abrirModal()">
         + Nueva Solicitud
     </button>
-
+    
+    <button class="btn" onclick="cerrarSesion()">
+    Cerrar sesión
+    </button>
+    
 </div>
 
 <div class="container">
@@ -267,6 +271,14 @@ async function cargarSolicitudes(){
     </tr>
 `;
     });
+    async function cerrarSesion(){
+
+    await client.auth.signOut();
+
+    window.location.href =
+        'login.html';
+
+}
 
 }
 
