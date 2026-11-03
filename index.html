@@ -255,14 +255,15 @@ async function cargarSolicitudes(){
     data.forEach(item => {
 
         tabla.innerHTML += `
-            <tr>
-                <td>${item.ticket_interno || ''}</td>
-                <td>${item.asunto || ''}</td>
-                <td>${item.proveedor || ''}</td>
-                <td>${item.estado || ''}</td>
-            </tr>
-        `;
-
+    <tr>
+        <td>${item.ticket_interno || ''}</td>
+        <td>${item.asunto || ''}</td>
+        <td>${item.proveedor || ''}</td>
+        <td>${item.estado || ''}</td>
+        <td>${item.precio_cotizacion || ''}</td>
+        <td>${item.observaciones || ''}</td>
+    </tr>
+`;
     });
 
 }
