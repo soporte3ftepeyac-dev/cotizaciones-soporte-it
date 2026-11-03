@@ -100,10 +100,10 @@ const supabaseKey =
 'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
 
 const client =
-    supabase.createClient(
-        supabaseUrl,
-        supabaseKey
-    );
+supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
 
 async function login(){
 
@@ -118,7 +118,9 @@ async function login(){
         .getElementById('password')
         .value;
 
-    document.getElementById('mensaje').innerText = '';
+    document.getElementById(
+        'mensaje'
+    ).innerText = '';
 
     const { error } =
         await client.auth.signInWithPassword({
@@ -128,7 +130,9 @@ async function login(){
 
     if(error){
 
-        document.getElementById('mensaje').innerText =
+        document.getElementById(
+            'mensaje'
+        ).innerText =
             error.message;
 
         return;
@@ -136,35 +140,38 @@ async function login(){
 
     const soporte =
         await client
-        .from('soporte')
-        .select('*')
-        .eq('correo', correo);
+            .from('soporte')
+            .select('*')
+            .eq('correo', correo);
 
     if(
         soporte.data &&
         soporte.data.length > 0
     ){
-        window.location.href = 'index.html';
+        window.location.href =
+            'index.html';
         return;
     }
 
     const proveedores =
-    await client
-    .from('proveedores')
-    .select('*');
+        await client
+            .from('proveedores')
+            .select('*')
+            .eq('correo', correo);
 
-console.log(proveedores.data);
     if(
-    proveedores.data &&
-    proveedores.data.length > 0
-){
-    window.location.href = 'proveedor.html';
-    return;
-}
+        proveedores.data &&
+        proveedores.data.length > 0
+    ){
+        window.location.href =
+            'proveedor.html';
+        return;
+    }
 
-    document.getElementById('mensaje').innerText =
+    document.getElementById(
+        'mensaje'
+    ).innerText =
         'Usuario sin permisos';
-
 }
 
 document.addEventListener(
@@ -177,8 +184,8 @@ document.addEventListener(
 
     }
 );
-</script>
 
+</script>
 </body>
 </html>
 
