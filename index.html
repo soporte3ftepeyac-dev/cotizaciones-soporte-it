@@ -278,18 +278,20 @@ async function cargarSolicitudes(){
         <td>${item.observaciones || ''}</td>
     </tr>
 `;
-    });
-    function cerrarSesion(){
-    alert('Hola');
-}
-
-    await client.auth.signOut();
-
-    window.location.href = 'login.html';
+        });
 
 }
 
+function cerrarSesion(){
+
+    client.auth.signOut();
+
+    window.location.href =
+        'login.html';
+
 }
+
+cargarSolicitudes();
 
 cargarSolicitudes();
 
