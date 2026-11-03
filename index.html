@@ -190,6 +190,14 @@ function abrirModal(){
 
 function cerrarModal(){
     document.getElementById('modal').style.display = 'none';
+
+async function cerrarSesion(){
+
+    await client.auth.signOut();
+
+    window.location.href =
+        'login.html';
+
 }
 
 async function guardarSolicitud(){
