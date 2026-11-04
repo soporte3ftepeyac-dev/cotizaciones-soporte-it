@@ -95,7 +95,7 @@ textarea{
 
 <div class="header">
 
-    <h2>PRUEBA GUS</h2>
+    <h2>COTIZACIONES</h2>
 
     <button class="btn" onclick="abrirModal()">
         + Nueva Solicitud
@@ -121,6 +121,7 @@ textarea{
                     <th>Estado</th>
                     <th>Precio de Cotización</th>
                     <th>Marca y modelo</th>
+                    <th>Documento</th>
                     <th>Validación</th>
                 </tr>
             </thead>
@@ -305,7 +306,16 @@ async function cargarSolicitudes(){
 </td>
     <td>${item.precio_cotizacion || ''}</td>
     <td>${item.observaciones || ''}</td>
-    <td>HOLA</td>
+     <td>
+        ${
+            item.archivo_url
+            ? `<a href="${item.archivo_url}" target="_blank">
+                📄 Ver PDF
+               </a>`
+            : 'Sin archivo'
+        }
+    </td>
+
     <td>
         <button onclick="aprobarSolicitud('${item.ticket_interno}')">
             Aprobar
