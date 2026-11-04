@@ -321,6 +321,7 @@ async function cargarSolicitudes(){
 }
 async function aprobarSolicitud(ticket){
 
+    alert(ticket);
     const { error } =
     await client
         .from('Solicitudes')
@@ -341,7 +342,7 @@ async function aprobarSolicitud(ticket){
 }
 
 async function rechazarSolicitud(ticket){
-
+    alert(ticket);
     const { error } =
     await client
         .from('Solicitudes')
