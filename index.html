@@ -291,7 +291,18 @@ async function cargarSolicitudes(){
     <td>${item.ticket_interno || ''}</td>
     <td>${item.asunto || ''}</td>
     <td>${item.proveedor || ''}</td>
-    <td>${item.estado || ''}</td>
+    <td>
+    ${item.estado === 'Pendiente'
+        ? '<span style="color:#d97706;font-weight:bold;">Pendiente</span>'
+        : item.estado === 'Cotizada'
+        ? '<span style="color:#2563eb;font-weight:bold;">Cotizada</span>'
+        : item.estado === 'Aprobada'
+        ? '<span style="color:#16a34a;font-weight:bold;">Aprobada</span>'
+        : item.estado === 'Rechazada'
+        ? '<span style="color:#dc2626;font-weight:bold;">Rechazada</span>'
+        : item.estado
+    }
+</td>
     <td>${item.precio_cotizacion || ''}</td>
     <td>${item.observaciones || ''}</td>
     <td>HOLA</td>
