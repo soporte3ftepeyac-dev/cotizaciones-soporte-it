@@ -357,26 +357,27 @@ async function guardarSolicitud(){
 }
 
 async function cargarSolicitudes(){
+
     const {
-    data: { user }
-} = await client.auth.getUser();
+        data: { user }
+    } = await client.auth.getUser();
 
-const { data: soporte } =
-await client
-    .from('soporte')
-    .select('*')
-    .eq('correo', user.email)
-.single();
+    const { data: soporte } =
+    await client
+        .from('soporte')
+        .select('*')
+        .eq('correo', user.email)
+        .single();
 
-document.getElementById(
-    'nombreUsuario'
-).innerTex* =
-    soporte.nombre || '';
+    document.getElementById(
+        'nombreUsuario'
+    ).innerText =
+        soporte.nombre || '';
 
-docu*ent.getElementById(
-    'correoUsu*rio'
-).innerText =
-    soporte.cor*eo || '';
+    document.getElementById(
+        'correoUsuario'
+    ).innerText =
+        soporte.correo || '';
 
     const { data, error } =
     await client
@@ -394,12 +395,14 @@ docu*ent.getElementById(
     );
 
     tabla.innerHTML = '';
+
     let pendientes = 0;
     let cotizadas = 0;
     let aprobadas = 0;
     let rechazadas = 0;
 
     data.forEach(item => {
+
         if(item.estado === 'Pendiente') pendientes++;
         if(item.estado === 'Cotizada') cotizadas++;
         if(item.estado === 'Aprobada') aprobadas++;
@@ -410,6 +413,7 @@ docu*ent.getElementById(
     <td>${item.ticket_interno || ''}</td>
     <td>${item.asunto || ''}</td>
     <td>${item.proveedor || ''}</td>
+
     <td>
     ${item.estado === 'Pendiente'
         ? '<span style="color:#d97706;font-weight:bold;">Pendiente</span>'
@@ -421,10 +425,13 @@ docu*ent.getElementById(
         ? '<span style="color:#dc2626;font-weight:bold;">Rechazada</span>'
         : item.estado
     }
-</td>
+    </td>
+
     <td>${item.precio_cotizacion || ''}</td>
+
     <td>${item.observaciones || ''}</td>
-     <td>
+
+    <td>
         ${
             item.archivo_url
             ? `<a href="${item.archivo_url}" target="_blank">
@@ -443,9 +450,11 @@ docu*ent.getElementById(
             Rechazar
         </button>
     </td>
+
 </tr>
 `;
-        });
+    });
+
     document.getElementById('kpiPendientes').innerText = pendientes;
     document.getElementById('kpiCotizadas').innerText = cotizadas;
     document.getElementById('kpiAprobadas').innerText = aprobadas;
