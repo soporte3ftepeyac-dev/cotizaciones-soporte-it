@@ -104,8 +104,23 @@ th,td{
 <body>
 
 <div class="header" style="display:flex;justify-content:space-between;align-items:center;">
+    
+    <div style="text-align:right;">
+
+    <div id="nombreProveedor"></div>
+
+    <div id="correoProveedor"></div>
+
+    <button class="btn" onclick="cerrarSesion()">
+        Cerrar sesión
+    </button>
+
+</div>
 
     <h2>Panel de Proveedores</h2>
+    
+        <div id="nombreProveedor"></div>
+    <div id="correoProveedor"></div>
 
     <button class="btn" onclick="cerrarSesion()">
         Cerrar sesión
@@ -205,6 +220,29 @@ async function verificarSesion(){
 }
 
 async function cargarSolicitudes(){
+    const {
+    data: { user }
+} = await client.auth.getUser();
+
+const { data: proveedor } =
+await client
+    .from('proveedores')
+    .select('*')
+    .eq(
+        'correo',
+        user.email
+    )
+    .single();
+
+document.getElementById(
+    'nombreProveedor'
+).innerText =
+    proveedor.nombre || '';
+
+document.getElementById(
+    'correoProveedor'
+).innerText =
+    proveedor.correo || '';
 
     const { data, error } =
         await client
