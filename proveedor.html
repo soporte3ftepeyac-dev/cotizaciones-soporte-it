@@ -105,11 +105,21 @@ th,td{
 
 <div class="header" style="display:flex;justify-content:space-between;align-items:center;">
     
-    <div style="text-align:right;">
+    <div style="
+    position:absolute;
+    right:20px;
+    top:15px;
+    text-align:right;
+">
 
-    <div id="nombreProveedor"></div>
+    <div id="empresaProveedor"></div>
     <div id="correoProveedor"></div>
-    <button class="btn" onclick="cerrarSesion()">
+
+    <button
+        class="btn"
+        onclick="cerrarSesion()"
+        style="margin-top:10px;"
+    >
         Cerrar sesión
     </button>
 
