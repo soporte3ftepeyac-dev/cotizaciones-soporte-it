@@ -74,6 +74,9 @@ textarea{
 <div class="header">
     <h2>Detalle de Solicitud</h2>
 </div>
+    <button class="btn" onclick="volver()">
+    ← Volver a Solicitudes
+    </button>
 
 <div class="container">
 
@@ -120,6 +123,8 @@ textarea{
 </div>
 
 <script>
+
+    function volver(){ window.history.back(); }
 
 const supabaseUrl =
 'https://vkilesppmsjaluuqqakb.supabase.co';
