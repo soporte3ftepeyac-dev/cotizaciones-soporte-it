@@ -20,11 +20,9 @@ body{
     background:#2f7d32;
     color:white;
     padding:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    position:relative;
 }
-
+    
 .btn{
     background:#4BA33F;
     color:white;
@@ -149,16 +147,32 @@ textarea{
 
     <h2>COTIZACIONES</h2>
 
-    <button class="btn" onclick="abrirModal()">
-        + Nueva Solicitud
-    </button>
-    
-    <button class="btn" onclick="cerrarSesion()">
-    Cerrar sesión
-    </button>
-    
-</div>
+    <div style="
+        position:absolute;
+        right:20px;
+        top:20px;
+        text-align:right;
+    ">
 
+        <div id="nombreUsuario"></div>
+
+        <div id="correoUsuario"
+             style="font-size:14px;">
+        </div>
+
+        <button
+            class="btn"
+            onclick="cerrarSesion()"
+            style="
+                margin-top:10px;
+                padding:8px 15px;
+            ">
+            Cerrar sesión
+        </button>
+
+    </div>
+
+</div>
 <div class="container">
   <div class="kpis">
 
@@ -343,6 +357,26 @@ async function guardarSolicitud(){
 }
 
 async function cargarSolicitudes(){
+    const {
+    data: { user }
+} = await client.auth.getUser();
+
+const { data: soporte } =
+await client
+    .from('soporte')
+    .select('*')
+    .eq('correo', user.email)
+ *  .single();
+
+document.getElementB*Id(
+    'nombreUsuario'
+).innerTex* =
+    soporte.nombre || '';
+
+docu*ent.getElementById(
+    'correoUsu*rio'
+).innerText =
+    soporte.cor*eo || '';
 
     const { data, error } =
     await client
