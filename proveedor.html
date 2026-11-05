@@ -103,28 +103,29 @@ th,td{
 
 <body>
 
-<div class="header" style="display:flex;justify-content:space-between;align-items:center;">
-    
-    <div style="
+<div id="datosProveedor" style="
     position:absolute;
-    right:20px;
-    top:15px;
-    text-align:right;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
 ">
 
-    <div id="empresaProveedor"></div>
-    <div id="correoProveedor"></div>
+    <div id="empresaProveedor"
+        style="
+            font-weight:bold;
+            font-size:22px;
+        ">
+    </div>
 
-    <button
-        class="btn"
-        onclick="cerrarSesion()"
-        style="margin-top:10px;"
-    >
-        Cerrar sesión
-    </button>
+    <div id="correoProveedor"
+        style="
+            font-size:14px;
+        ">
+    </div>
 
 </div>
 
+    
     <h2>Panel de Proveedores</h2>
     
         <div id="nombreProveedor"></div>
