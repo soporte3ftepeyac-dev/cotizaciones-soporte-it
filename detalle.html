@@ -129,6 +129,7 @@ textarea{
        <br><br>
        <input type="file" id="archivo">
        <br> <br>
+       <div id="archivoActual"></div>
        
         <button
             class="btn"
@@ -199,8 +200,18 @@ async function cargarDetalle(){
 
     document.getElementById('observaciones').value =
         data.observaciones || '';
-}
 
+    // AQUI ↓↓↓
+    if (data.archivo_url) {
+
+        document.getElementById('archivoActual').innerHTML = `
+            <strong>Archivo actual:</strong>
+            <a href="${data.archivo_url}" target="_blank">
+                Ver cotización adjunta
+            </a>
+        `;
+    }
+}
 async function guardarCotizacion(){
 
     const archivoUrl =
