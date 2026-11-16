@@ -449,7 +449,6 @@ async function cargarSolicitudes(){
     <td>${item.created_at ? item.created_at.substring(0,10): ''}</td>
     <td>${item.asunto || ''}</td>
     <td>${item.proveedor || ''}</td>
-    <td>${item.domicilio || ''}</td>
 
     <td>
     ${item.estado === 'Pendiente'
@@ -504,6 +503,7 @@ async function cargarSolicitudes(){
 </button>
 
     </td>
+    <td>${item.domicilio || ''}</td>
 
 </tr>
 `;
