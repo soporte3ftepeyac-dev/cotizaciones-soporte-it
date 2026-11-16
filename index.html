@@ -453,7 +453,7 @@ async function cargarSolicitudes(){
     <td>
     ${
         item.fecha_cotizacion
-        ? new Date(item.fecha_cotizacion).toLocaleDateString()
+        ? new Date(item.fecha_cotizacion).toLocaleDateString('es-MX')
         : ''
     }
 </td>
