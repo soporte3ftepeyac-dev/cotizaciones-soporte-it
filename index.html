@@ -516,19 +516,20 @@ async function cargarSolicitudes(){
 }
 async function aprobarSolicitud(ticket){
 
+    const domicilio =
+        prompt('Captura el domicilio de entrega:');
+
+    if(!domicilio){
+        return;
+    }
+
     const { error } =
     await client
         .from('Solicitudes')
-        const domicilio =
-    prompt('Captura el domicilio de entrega:');
-
-if(!domicilio){
-    return;
-}
         .update({
-    estado:'Aprobada',
-    domicilio: domicilio
-})
+            estado:'Aprobada',
+            domicilio: domicilio
+        })
         .eq(
             'ticket_interno',
             ticket
