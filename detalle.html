@@ -216,8 +216,8 @@ async function cargarDetalle(){
 }
 async function guardarCotizacion(){
 
-    const archivoUrl =
-        await subirArchivo();
+    const archivos =
+    await subirArchivos();
 
     const { error } =
         await client
@@ -239,9 +239,6 @@ async function guardarCotizacion(){
                     'observaciones'
                 ).value,
 
-            archivo_url:
-                archivoUrl,
-
             estado:
                 'Cotizada'
 
@@ -251,12 +248,20 @@ async function guardarCotizacion(){
             ticket
         );
 
-    if(error){
-        console.error(error);
-        alert(error.message);
-        return;
-    }
+    if (archivos.length > 0) {
 
+    const registros =
+        archivos.map(a => ({
+            ticket_interno: ticket,
+            nombre_archivo: a.nombre_archivo,
+            archivo_url: a.archivo_url
+        }));
+
+    await client
+        .from('archivos_cotizacion')
+        .insert(registros);
+}
+    console.log(archivos);
     alert('Cotización guardada correctamente');
     window.location.href = 'proveedor.html';
 }
