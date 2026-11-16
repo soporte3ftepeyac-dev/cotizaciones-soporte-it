@@ -113,6 +113,11 @@ textarea{
 
             <strong>Descripción:</strong>
             <span id="descripcion"></span>
+            <br><br>
+
+            <strong>Domicilio de entrega:</strong>
+            <span id="domicilio"></span>
+            
         </div>
 
         <label>Precio Cotización</label>
@@ -187,6 +192,9 @@ async function cargarDetalle(){
 
     document.getElementById('ticket').innerText =
         data.ticket_interno || '';
+    
+    document.getElementById('domicilio').innerText =
+        data.domicilio || '';
 
     document.getElementById('asunto').innerText =
         data.asunto || '';
