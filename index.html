@@ -217,6 +217,7 @@ textarea{
             <thead>
                 <tr>
                     <th>Ticket</th>
+                    <th>Fecha Solicitud</th>
                     <th>Asunto</th>
                     <th>Proveedor</th>
                     <th>Estado</th>
@@ -433,6 +434,7 @@ async function cargarSolicitudes(){
         tabla.innerHTML += `
 <tr>
     <td>${item.ticket_interno || ''}</td>
+    <td>${item.created_at ? item.created_at.substring(0,10): ''}</td>
     <td>${item.asunto || ''}</td>
     <td>${item.proveedor || ''}</td>
 
