@@ -470,6 +470,11 @@ async function cargarSolicitudes(){
         <button onclick="rechazarSolicitud('${item.ticket_interno}')">
             Rechazar
         </button>
+        
+        <button onclick="eliminarSolicitud('${item.ticket_interno}')">
+    Eliminar
+</button>
+
     </td>
 
 </tr>
@@ -503,6 +508,7 @@ async function aprobarSolicitud(ticket){
 }
 
 async function rechazarSolicitud(ticket){
+
     const { error } =
     await client
         .from('Solicitudes')
@@ -518,6 +524,32 @@ async function rechazarSolicitud(ticket){
         alert(error.message);
         return;
     }
+
+    cargarSolicitudes();
+}
+
+async function eliminarSolicitud(ticket){
+
+    if(!confirm('¿Deseas eliminar esta solicitud?')){
+        return;
+    }
+
+    const { error } =
+    await client
+        .from('Solicitudes')
+        .delete()
+        .eq(
+            'ticket_interno',
+            ticket
+        );
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    cargarSolicitudes();
+}
 
 cargarSolicitudes();
 
