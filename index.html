@@ -394,6 +394,10 @@ async function cargarSolicitudes(){
     await client
         .from('Solicitudes')
         .select('*');
+    const { data: archivos } =
+    await client
+    .from('archivos_cotizacion')
+    .select('*');
 
     if(error){
         console.error(error);
@@ -403,6 +407,10 @@ async function cargarSolicitudes(){
     const tabla =
     document.getElementById(
         'tablaSolicitudes'
+    );
+    const archivosTicket =
+    archivos.filter(a =>
+        a.ticket_interno === item.ticket_interno
     );
 
     tabla.innerHTML = '';
@@ -444,12 +452,12 @@ async function cargarSolicitudes(){
 
     <td>
         ${
-            item.archivo_url
-            ? `<a href="${item.archivo_url}" target="_blank">
-                📄 Ver PDF
-               </a>`
-            : 'Sin archivo'
-        }
+    archivosTicket.length > 0
+    ? `<a href="${archivosTicket[0].archivo_url}" target="_blank">
+        📄 Ver PDF
+       </a>`
+    : 'Sin archivo'
+}
     </td>
 
     <td>
