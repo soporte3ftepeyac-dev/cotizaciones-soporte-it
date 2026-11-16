@@ -263,6 +263,11 @@ textarea{
 
         <input id="proveedor" placeholder="Proveedor">
 
+         <textarea
+           id="domicilio"
+           placeholder="Domicilio de entrega">
+        </textarea>
+
         <button class="btn" onclick="guardarSolicitud()">
             Guardar
         </button>
@@ -353,7 +358,10 @@ async function guardarSolicitud(){
             proveedor:
                 document.getElementById('proveedor').value,
 
-            estado:'Pendiente'
+            domicilio:
+             document.getElementById('domicilio').value,
+
+             estado:'Pendiente'
 
         }]);
 
