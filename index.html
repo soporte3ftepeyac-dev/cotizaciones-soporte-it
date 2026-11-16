@@ -445,7 +445,7 @@ async function cargarSolicitudes(){
 
         tabla.innerHTML += `
 <tr>
-    <td>${item.ticket_interno || ''}</td>
+    <td> <a href="editarSolicitud.html?ticket=${item.ticket_interno}"> ${item.ticket_interno}</a></td>
     <td>${item.created_at ? item.created_at.substring(0,10): ''}</td>
     <td>${item.asunto || ''}</td>
     <td>${item.proveedor || ''}</td>
@@ -575,6 +575,10 @@ async function eliminarSolicitud(ticket){
         alert(error.message);
         return;
     }
+
+    function editarSolicitud(ticket){
+    alert('Editar solicitud: ' + ticket);
+}
 
     cargarSolicitudes();
 }
