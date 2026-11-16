@@ -258,9 +258,14 @@ async function guardarCotizacion(){
             archivo_url: a.archivo_url
         }));
 
+   const { error: errorArchivos } =
     await client
-        .from('archivos_cotizacion')
-        .insert(registros);
+    .from('archivos_cotizacion')
+    .insert(registros);
+
+if (errorArchivos) {
+    alert(errorArchivos.message);
+}
 }
     console.log(archivos);
     alert('Cotización guardada correctamente');
