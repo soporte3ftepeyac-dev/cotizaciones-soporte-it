@@ -221,6 +221,7 @@ textarea{
                     <th>Proveedor</th>
                     <th>Estado</th>
                     <th>Precio de Cotización</th>
+                    <th>Fecha Cotización</th>
                     <th>Marca y modelo</th>
                     <th>Documento</th>
                     <th>Validación</th>
@@ -449,6 +450,14 @@ async function cargarSolicitudes(){
     </td>
 
     <td>${item.precio_cotizacion || ''}</td>
+    <td>
+    ${
+        item.fecha_cotizacion
+        ? new Date(item.fecha_cotizacion).toLocaleDateString()
+        : ''
+    }
+</td>
+
 
     <td>${item.observaciones || ''}</td>
 
