@@ -204,15 +204,30 @@ async function cargarDetalle(){
         data.observaciones || '';
 
     // AQUI ↓↓↓
-    if (data.archivo_url) {
+    const { data: archivos } =
+    await client
+        .from('archivos_cotizacion')
+        .select('*')
+        .eq('ticket_interno', ticket);
+    alert(JSON.stringify(archivos));
+    
+    if (archivos && archivos.length > 0) {
 
-        document.getElementById('archivoActual').innerHTML = `
-            <strong>Archivo actual:</strong>
-            <a href="${data.archivo_url}" target="_blank">
-                Ver cotización adjunta
-            </a>
+    let html = '<strong>Archivos cargados:</strong><br>';
+
+    archivos.forEach(a => {
+
+        html += `
+            <div>
+                📄 <a href="${a.archivo_url}" target="_blank">
+                    ${a.nombre_archivo}
+                </a>
+            </div>
         `;
-    }
+    });
+
+    document.getElementById('archivoActual').innerHTML = html;
+}
 }
 async function guardarCotizacion(){
 
