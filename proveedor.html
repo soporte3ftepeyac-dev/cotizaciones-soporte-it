@@ -175,6 +175,7 @@ th,td{
                     <th>Asunto</th>
                     <th>Proveedor</th>
                     <th>Estado</th>
+                    <th>Fecha Solicitud</th>
                     <th>Acción</th>
                 </tr>
             </thead>
@@ -299,6 +300,7 @@ document.getElementById('kpiRechazadas').innerText =
 <td>${item.asunto || ''}</td>
 <td>${item.proveedor || ''}</td>
 <td>${item.estado || ''}</td>
+<td> ${item.created_at ? item.created_at.substring(0,10) : ''}</td>
 
 <td>
     <button onclick="verCotizar('${item.ticket_interno}')">
