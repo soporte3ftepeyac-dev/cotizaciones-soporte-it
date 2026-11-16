@@ -408,10 +408,7 @@ async function cargarSolicitudes(){
     document.getElementById(
         'tablaSolicitudes'
     );
-    const archivosTicket =
-    archivos.filter(a =>
-        a.ticket_interno === item.ticket_interno
-    );
+    
 
     tabla.innerHTML = '';
 
@@ -421,6 +418,11 @@ async function cargarSolicitudes(){
     let rechazadas = 0;
 
     data.forEach(item => {
+   
+        const archivosTicket =
+          archivos.filter(a =>
+           a.ticket_interno === item.ticket_interno
+    );
 
         if(item.estado === 'Pendiente') pendientes++;
         if(item.estado === 'Cotizada') cotizadas++;
