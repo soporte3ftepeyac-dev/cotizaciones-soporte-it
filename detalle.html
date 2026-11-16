@@ -209,7 +209,6 @@ async function cargarDetalle(){
         .from('archivos_cotizacion')
         .select('*')
         .eq('ticket_interno', ticket);
-    alert(JSON.stringify(archivos));
     
     if (archivos && archivos.length > 0) {
 
@@ -233,7 +232,6 @@ async function guardarCotizacion(){
 
     const archivos =
     await subirArchivos();
-    alert(JSON.stringify(archivos));
 
     const { error } =
         await client
