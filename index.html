@@ -450,7 +450,7 @@ async function cargarSolicitudes(){
     </td>
 
     <td>${item.precio_cotizacion || ''}</td>
-    <td>${item.fecha_cotizacion || ''}</td>
+    <td>${JSON.stringify(item.fecha_cotizacion)}</td>
     <td>${item.observaciones || ''}</td>
 
     <td>
