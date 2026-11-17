@@ -300,7 +300,8 @@ document.getElementById('kpiRechazadas').innerText =
     data.forEach(item => {
 
         tabla.innerHTML += `
-           <td>${item.ticket_interno || ''}</td>
+<tr>           
+<td>${item.ticket_interno || ''}</td>
 <td>${item.asunto || ''}</td>
 <td>${item.proveedor || ''}</td>
 <td>${item.estado || ''}</td>
