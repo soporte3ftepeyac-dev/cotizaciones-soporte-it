@@ -544,7 +544,7 @@ async function aprobarSolicitud(ticket){
         .from('notificaciones')
         .insert([{
             ticket_interno: ticket,
-            mensaje: 'La solicitud fue aprobada',
+            mensaje: `La solicitud ${ticket} ha sido modificada`,
             leida: false
         }]);
 
