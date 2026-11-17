@@ -541,12 +541,12 @@ async function aprobarSolicitud(ticket){
     }
 
     await client
-        .from('notificaciones')
-        .insert([{
-            ticket_interno: ticket,
-            mensaje: `La solicitud ${ticket} ha sido modificada`,
-            leida: false
-        }]);
+    .from('notificaciones')
+    .insert([{
+        ticket_interno: ticket,
+        mensaje: `La solicitud ${ticket} ha sido modificada`,
+        leida: false
+    }]);
 
     cargarSolicitudes();
 }
