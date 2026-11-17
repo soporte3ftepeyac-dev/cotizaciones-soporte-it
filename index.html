@@ -530,13 +530,6 @@ async function aprobarSolicitud(ticket){
             estado:'Aprobada',
             domicilio: domicilio
         })
-        await client
-    .from('notificaciones')
-    .insert([{
-        ticket_interno: ticket,
-        mensaje: 'La solicitud fue aprobada',
-        leida: false
-    }]);
         .eq(
             'ticket_interno',
             ticket
@@ -546,6 +539,14 @@ async function aprobarSolicitud(ticket){
         alert(error.message);
         return;
     }
+
+    await client
+        .from('notificaciones')
+        .insert([{
+            ticket_interno: ticket,
+            mensaje: 'La solicitud fue aprobada',
+            leida: false
+        }]);
 
     cargarSolicitudes();
 }
