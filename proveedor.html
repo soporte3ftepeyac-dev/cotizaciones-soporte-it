@@ -106,7 +106,11 @@ th,td{
     <div class="header">
 
     <h2>Panel de Proveedores</h2>
-
+  
+    <div id="notificaciones">
+    🔔 0 notificaciones
+    </div>
+    
     <div style="
         position:absolute;
         right:20px;
@@ -320,8 +324,25 @@ function verCotizar(ticket){
         ticket;
 
 }
-cargarSolicitudes();
+async function cargarNotificaciones(){
 
+    const { data, error } =
+    await client
+        .from('notificaciones')
+        .select('*')
+        .eq('leida', false);
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    document.getElementById('notificaciones').innerText =
+        `🔔 ${data.length} notificaciones`;
+}
+cargarSolicitudes();
+cargarNotificaciones();
+    
 </script>
 
 </body>
