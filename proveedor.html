@@ -428,62 +428,14 @@ async function mostrarNotificaciones(){
             'leida',
             false
         );
+
+    cargarNotificaciones();
+}
+
+cargarSolicitudes();
 cargarNotificaciones();
 
-async function mostrarNotificaciones(){
-
-    const lista =
-        document.getElementById(
-            'listaNotificaciones'
-        );
-
-    if(lista.style.display === 'block'){
-
-        lista.style.display =
-            'none';
-
-        return;
-    }
-
-    const { data, error } =
-    await client
-        .from('notificaciones')
-        .select('*')
-        .order(
-            'created_at',
-            { ascending:false }
-        );
-
-    if(error){
-        console.error(error);
-        return;
-    }
-
-    let html =
-        '<h4>Notificaciones</h4>';
-
-    data.forEach(n => {
-
-        html += `
-            <div style="
-                padding:8px;
-                border-bottom:1px solid #ddd;
-            ">
-                🔔 ${n.mensaje}
-            </div>
-        `;
-    });
-
-    lista.innerHTML = html;
-
-    lista.style.display =
-        'block';
-}
-cargarSolicitudes();
-    
 </script>
 
 </body>
 </html>
-
-
