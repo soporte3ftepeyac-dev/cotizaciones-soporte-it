@@ -348,7 +348,20 @@ function verCotizar(ticket){
         ticket;
 
 }
-async function cargarNotificaciones(){
+async function mostrarNotificaciones(){
+
+    const lista =
+        document.getElementById(
+            'listaNotificaciones'
+        );
+
+    if(lista.style.display === 'block'){
+
+        lista.style.display =
+            'none';
+
+        return;
+    }
 
     const {
         data: { user }
@@ -368,10 +381,13 @@ async function cargarNotificaciones(){
     await client
         .from('notificaciones')
         .select('*')
-        .eq('leida', false)
         .eq(
             'proveedor',
             proveedor.nombre
+        )
+        .order(
+            'created_at',
+            { ascending:false }
         );
 
     if(error){
@@ -379,9 +395,39 @@ async function cargarNotificaciones(){
         return;
     }
 
-    document.getElementById('notificaciones').innerText =
-        `🔔 ${data.length} notificaciones`;
-}
+    let html =
+        '<h4>Notificaciones</h4>';
+
+    data.forEach(n => {
+
+        html += `
+            <div style="
+                padding:8px;
+                border-bottom:1px solid #ddd;
+            ">
+                🔔 ${n.mensaje}
+            </div>
+        `;
+    });
+
+    lista.innerHTML = html;
+
+    lista.style.display =
+        'block';
+
+    await client
+        .from('notificaciones')
+        .update({
+            leida: true
+        })
+        .eq(
+            'proveedor',
+            proveedor.nombre
+        )
+        .eq(
+            'leida',
+            false
+        );
 cargarNotificaciones();
 
 async function mostrarNotificaciones(){
