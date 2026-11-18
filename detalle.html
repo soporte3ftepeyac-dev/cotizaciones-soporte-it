@@ -123,9 +123,6 @@ textarea{
         <label>Precio Cotización</label>
         <input type="number" id="precioCotizacion">
 
-        <label>Precio Online</label>
-        <input type="number" id="precioOnline">
-
         <label>Observaciones</label>
         <textarea id="observaciones"></textarea>
 
@@ -205,9 +202,6 @@ async function cargarDetalle(){
     document.getElementById('precioCotizacion').value =
         data.precio_cotizacion || '';
 
-    document.getElementById('precioOnline').value =
-        data.precio_online || '';
-
     document.getElementById('observaciones').value =
         data.observaciones || '';
 
@@ -249,11 +243,6 @@ async function guardarCotizacion(){
             precio_cotizacion:
                 document.getElementById(
                     'precioCotizacion'
-                ).value,
-
-            precio_online:
-                document.getElementById(
-                    'precioOnline'
                 ).value,
 
             observaciones:
