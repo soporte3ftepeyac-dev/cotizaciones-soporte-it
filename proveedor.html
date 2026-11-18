@@ -268,9 +268,13 @@ document.getElementById(
     proveedor.correo || '';
 
     const { data, error } =
-        await client
+    await client
         .from('Solicitudes')
-        .select('*');
+        .select('*')
+        .eq(
+            'proveedor',
+            proveedor.nombre
+        );
 
     if(error){
         console.error(error);
