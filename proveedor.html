@@ -319,7 +319,16 @@ document.getElementById('kpiRechazadas').innerText =
 <td>${item.asunto || ''}</td>
 <td>${item.proveedor || ''}</td>
 <td>${item.estado || ''}</td>
-<td> ${item.created_at ? item.created_at.substring(0,10) : ''}</td>
+<td>
+    ${
+        item.created_at
+        ? new Date(item.created_at)
+            .toLocaleDateString('es-MX', {
+                timeZone: 'America/Mexico_City'
+            })
+        : ''
+    }
+</td>
 
 <td>
     <button onclick="verCotizar('${item.ticket_interno}')">
