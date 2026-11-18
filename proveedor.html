@@ -380,11 +380,28 @@ async function mostrarNotificaciones(){
         return;
     }
 
+    const {
+        data: { user }
+    } = await client.auth.getUser();
+
+    const { data: proveedor } =
+    await client
+        .from('proveedores')
+        .select('*')
+        .eq(
+            'correo',
+            user.email
+        )
+        .single();
+
     const { data, error } =
     await client
         .from('notificaciones')
         .select('*')
-         .eq( 'proveedor', proveedor.nombre)
+        .eq(
+            'proveedor',
+            proveedor.nombre
+        )
         .order(
             'created_at',
             { ascending:false }
