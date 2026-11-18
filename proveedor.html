@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portal de Proveedores</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+    .kpis{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.kpi-card{
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 2px 5px rgba(0,0,0,.1);
+}
+
+.kpi-card h3{
+    margin:0;
+    font-size:32px;
+}
+
+.kpi-card p{
+    margin-top:10px;
+}
+
+/* Colores */
+
+.kpi-pendientes{
+    background:#fef3c7;
+    border-left:5px solid #d97706;
+}
+
+.kpi-cotizadas{
+    background:#dbeafe;
+    border-left:5px solid #2563eb;
+}
+
+.kpi-aprobadas{
+    background:#dcfce7;
+    border-left:5px solid #16a34a;
+}
+
+.kpi-rechazadas{
+    background:#fee2e2;
+    border-left:5px solid #dc2626;
+}
+
+    
+    body{
+    font-family: Arial, sans-serif;
+    background:#f5f7fb;
+    margin:0;
+}
+
+.header{
+    background:#4BA33F;
+    color:white;
+    padding:20px;
+    position:relative;
+}
+
+.btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+    
+.container{
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+}
+</style>
+
+</head>
+
+<body>
+    <div class="header">
+
+    <h2>Panel de Proveedores</h2>
+  
+   <div
+    id="notificaciones"
+    onclick="mostrarNotificaciones()"
+    style="cursor:pointer; font-weight:bold;">
+    🔔 0 notificaciones
+</div>
+
+<div
+    id="listaNotificaciones"
+    style="display:none;">
+</div>
+        
+<div id="listaNotificaciones"></div>
+    
+    <div style="
+        position:absolute;
+        right:20px;
+        top:20px;
+        text-align:right;
+    ">
+
+        <div id="nombreProveedor"></div>
+
+        <div id="correoProveedor"
+             style="font-size:14px;">
+        </div>
+
+        <button
+            class="btn"
+            onclick="cerrarSesion()"
+            style="
+                margin-top:10px;
+                padding:8px 15px;
+            ">
+            Cerrar sesión
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="container">
+    <div class="kpis">
+
+    <div class="kpi-card kpi-pendientes">
+        <h3 id="kpiPendientes">0</h3>
+        <p>Pendientes</p>
+    </div>
+
+    <div class="kpi-card kpi-cotizadas">
+        <h3 id="kpiCotizadas">0</h3>
+        <p>Cotizadas</p>
+    </div>
+
+    <div class="kpi-card kpi-aprobadas">
+        <h3 id="kpiAprobadas">0</h3>
+        <p>Aprobadas</p>
+    </div>
+
+    <div class="kpi-card kpi-rechazadas">
+        <h3 id="kpiRechazadas">0</h3>
+        <p>Rechazadas</p>
+    </div>
+
+</div>
+</div>
+
+
+    <div class="card">
+
+        <h3>Mis Solicitudes</h3>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Asunto</th>
+                    <th>Proveedor</th>
+                    <th>Estado</th>
+                    <th>Fecha Solicitud</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaSolicitudes">
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+const supabaseUrl =
+'https://vkilesppmsjaluuqqakb.supabase.co';
+
+const supabaseKey =
+'sb_publishable_nN-Ik8NT4uaSduZj-48Xqg_o-Xt8UQ4';
+
+const client =
+    supabase.createClient(
+        supabaseUrl,
+        supabaseKey
+    );
+async function cerrarSesion(){
+
+    await client.auth.signOut();
+
+    window.location.href =
+        'login.html';
+
+}
+
+verificarSesion();
+
+async function verificarSesion(){
+
+    const {
+        data: { session }
+    } = await client.auth.getSession();
+
+    if(!session){
+
+        window.location.href =
+            'login.html';
+
+    }
+
+}
+
+async function cargarSolicitudes(){
+    const {
+    data: { user }
+} = await client.auth.getUser();
+
+const { data: proveedor } =
+await client
+    .from('proveedores')
+    .select('*')
+    .eq(
+        'correo',
+        user.email
+    )
+    .single();
+
+document.getElementById(
+    'nombreProveedor'
+).innerText =
+    proveedor.nombre || '';
+
+document.getElementById(
+    'correoProveedor'
+).innerText =
+    proveedor.correo || '';
+
+    const { data, error } =
+    await client
+        .from('Solicitudes')
+        .select('*')
+        .eq(
+            'proveedor',
+            proveedor.nombre
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    const tabla =
+        document.getElementById(
+            'tablaSolicitudes'
+        );
+
+    tabla.innerHTML = '';
+    const pendientes =
+    data.filter(x => x.estado === 'Pendiente').length;
+
+    const cotizadas =
+    data.filter(x => x.estado === 'Cotizada').length;
+
+    const aprobadas =
+    data.filter(x => x.estado === 'Aprobada').length;
+
+    const rechazadas =
+    data.filter(x => x.estado === 'Rechazada').length;
+
+document.getElementById('kpiPendientes').innerText =
+    pendientes;
+
+document.getElementById('kpiCotizadas').innerText =
+    cotizadas;
+
+document.getElementById('kpiAprobadas').innerText =
+    aprobadas;
+
+document.getElementById('kpiRechazadas').innerText =
+    rechazadas;
+
+    data.forEach(item => {
+
+        tabla.innerHTML += `
+<tr>           
+<td>${item.ticket_interno || ''}</td>
+<td>${item.asunto || ''}</td>
+<td>${item.proveedor || ''}</td>
+<td>${item.estado || ''}</td>
+<td>
+    ${
+        item.created_at
+        ? new Date(item.created_at)
+            .toLocaleDateString('es-MX', {
+                timeZone: 'America/Mexico_City'
+            })
+        : ''
+    }
+</td>
+
+<td>
+    <button onclick="verCotizar('${item.ticket_interno}')">
+        Ver / Cotizar
+    </button>
+</td>
+        `;
+
+    });
+
+}
+
+function verCotizar(ticket){
+
+    window.location.href =
+        'detalle.html?ticket=' +
+        ticket;
+
+}
+async function cargarNotificaciones(){
+
+    const { data, error } =
+    await client
+        .from('notificaciones')
+        .select('*')
+        .eq('leida', false);
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    document.getElementById('notificaciones').innerText =
+        `🔔 ${data.length} notificaciones`;
+}
+cargarNotificaciones();
+async function mostrarNotificaciones(){
+
+    const lista =
+        document.getElementById(
+            'listaNotificaciones'
+        );
+
+    if(lista.style.display === 'block'){
+
+        lista.style.display =
+            'none';
+
+        return;
+    }
+
+    const { data, error } =
+    await client
+        .from('notificaciones')
+        .select('*')
+        .order(
+            'created_at',
+            { ascending:false }
+        );
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    let html =
+        '<h4>Notificaciones</h4>';
+
+    data.forEach(n => {
+
+        html += `
+            <div style="
+                padding:8px;
+                border-bottom:1px solid #ddd;
+            ">
+                🔔 ${n.mensaje}
+            </div>
+        `;
+    });
+
+    lista.innerHTML = html;
+
+    lista.style.display =
+        'block';
+}
+cargarSolicitudes();
+    
+</script>
+
+</body>
+</html>
+
+
