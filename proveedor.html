@@ -385,6 +385,7 @@ function verCotizar(ticket){
         `🔔 ${data.length} notificaciones`;
 }
 cargarNotificaciones();
+    
 async function mostrarNotificaciones(){
 
     const lista =
@@ -451,6 +452,22 @@ async function mostrarNotificaciones(){
 
     lista.style.display =
         'block';
+    
+    await client
+    .from('notificaciones')
+    .update({
+        leida: true
+    })
+    .eq(
+        'proveedor',
+        proveedor.nombre
+    )
+    .eq(
+        'leida',
+        false
+    );
+
+cargarNotificaciones();
 }
 cargarSolicitudes();
     
