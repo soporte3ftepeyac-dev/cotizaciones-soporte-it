@@ -350,11 +350,29 @@ function verCotizar(ticket){
 }
 async function cargarNotificaciones(){
 
+    const {
+        data: { user }
+    } = await client.auth.getUser();
+
+    const { data: proveedor } =
+    await client
+        .from('proveedores')
+        .select('*')
+        .eq(
+            'correo',
+            user.email
+        )
+        .single();
+
     const { data, error } =
     await client
         .from('notificaciones')
         .select('*')
-        .eq('leida', false);
+        .eq('leida', false)
+        .eq(
+            'proveedor',
+            proveedor.nombre
+        );
 
     if(error){
         console.error(error);
@@ -365,6 +383,7 @@ async function cargarNotificaciones(){
         `🔔 ${data.length} notificaciones`;
 }
 cargarNotificaciones();
+
 async function mostrarNotificaciones(){
 
     const lista =
