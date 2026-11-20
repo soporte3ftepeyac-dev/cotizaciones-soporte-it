@@ -287,7 +287,9 @@ async function guardarCotizacion(){
                 ).value,
 
             estado:
-                'Cotizada',
+    document.querySelector(
+        'input[name="estadoSolicitud"]:checked'
+    ).value,
             fecha_cotizacion:
     new Date().toISOString()
 
