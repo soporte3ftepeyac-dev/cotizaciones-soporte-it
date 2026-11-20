@@ -263,8 +263,9 @@ async function guardarCotizacion(){
 
             estado:
                 'Cotizada',
+
             fecha_cotizacion:
-    new Date().toISOString()
+                new Date().toISOString()
 
         })
         .eq(
@@ -272,29 +273,56 @@ async function guardarCotizacion(){
             ticket
         );
 
+    if(error){
+        alert(error.message);
+        return;
+    }
+
     if (archivos.length > 0) {
 
-    const registros =
+        const registros =
         archivos.map(a => ({
             ticket_interno: ticket,
             nombre_archivo: a.nombre_archivo,
             archivo_url: a.archivo_url
         }));
 
-   const { error: errorArchivos } =
+        const { error: errorArchivos } =
+        await client
+            .from('archivos_cotizacion')
+            .insert(registros);
+
+        if (errorArchivos) {
+            alert(errorArchivos.message);
+        }
+    }
+
+    const { data: solicitud } =
+        await client
+            .from('Solicitudes')
+            .select('proveedor')
+            .eq(
+                'ticket_interno',
+                ticket
+            )
+            .single();
+
     await client
-    .from('archivos_cotizacion')
-    .insert(registros);
+        .from('notificaciones')
+        .insert([{
+            ticket_interno: ticket,
+            proveedor: solicitud.proveedor,
+            mensaje: `⚠️ Ticket ${ticket} actualizado: Ver detalle`,
+            leida: false
+        }]);
 
-if (errorArchivos) {
-    alert(errorArchivos.message);
-}
-}
     console.log(archivos);
-    alert('Cotización actualizada correctamente');
-    window.location.href = 'index.html';
-}
 
+    alert('Cotización actualizada correctamente');
+
+    window.location.href =
+        'index.html';
+}
 async function subirArchivos() {
 
     const archivos =
