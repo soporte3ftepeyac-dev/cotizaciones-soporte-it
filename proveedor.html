@@ -439,13 +439,15 @@ async function mostrarNotificaciones(){
     data.forEach(n => {
 
         html += `
-            <div style="
-                padding:8px;
-                border-bottom:1px solid #ddd;
-            ">
-                🔔 ${n.mensaje}
-            </div>
-        `;
+    <div style="
+        padding:8px;
+        border-bottom:1px solid #ddd;
+    ">
+        <a href="detalle.html?ticket=${n.ticket_interno}">
+            🔔 ${n.mensaje}
+        </a>
+    </div>
+`;
     });
 
     lista.innerHTML = html;
